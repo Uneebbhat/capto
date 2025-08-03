@@ -1,4 +1,10 @@
+import { Metadata } from 'next'
 import { SignupForm } from '@/components/signup-form'
+
+export const metadata: Metadata = {
+  title: 'Signup',
+  description: 'Signup to Capto',
+}
 
 export default function SignupPage() {
   return (
