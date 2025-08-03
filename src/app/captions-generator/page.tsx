@@ -1,6 +1,7 @@
+import { Metadata } from 'next'
+
 import GeneratedCaptions from '@/components/CaptionsGenerator/GeneratedCaptions'
 import CaptionsGeneratorForm from '@/components/CaptionsGenerator/CaptionsGeneratorForm'
-import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: "Captions Generator",

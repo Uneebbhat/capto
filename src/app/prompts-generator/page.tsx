@@ -1,5 +1,12 @@
+import { Metadata } from 'next';
+
 import GeneratedPrompts from '@/components/PromptsGenerator/GeneratedPrompts';
 import PromptsGeneratorForm from '@/components/PromptsGenerator/PromptsGeneratorForm';
+
+export const metadata: Metadata = {
+  title: "Prompts Generator",
+  description: "Generate creative content prompts for your social media posts."
+}
 
 export default function PromptsGeneratorPage() {
   return (
