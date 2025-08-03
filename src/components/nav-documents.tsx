@@ -12,6 +12,7 @@ import {
   SidebarMenuButton,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar"
+import { usePathname } from "next/navigation"
 
 export function NavDocuments({
   items,
@@ -22,6 +23,7 @@ export function NavDocuments({
     icon: Icon
   }[]
 }) {
+  const pathname = usePathname()
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Tools</SidebarGroupLabel>
@@ -29,7 +31,7 @@ export function NavDocuments({
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <Link href={item.url}>
+              <Link href={item.url} className={`${pathname === item.url ? "bg-gray-100" : ""}`}>
                 <item.icon />
                 <span>{item.name}</span>
               </Link>
