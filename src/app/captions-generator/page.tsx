@@ -1,5 +1,11 @@
 import GeneratedCaptions from '@/components/CaptionsGenerator/GeneratedCaptions'
 import CaptionsGeneratorForm from '@/components/CaptionsGenerator/CaptionsGeneratorForm'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Captions Generator",
+  description: "Generate engaging social media captions effortlessly."
+}
 
 export default function CaptionsGeneratorPage() {
   return (
