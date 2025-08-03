@@ -1,10 +1,15 @@
+import { Metadata } from "next";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { ModeToggleSwitch } from "@/components/mode-toggle";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
+export const metadata: Metadata = {
+  title: "Settings | Capto",
+  description: "Manage your account settings and preferences."
+}
 
 export default function SettingsPage() {
   return (

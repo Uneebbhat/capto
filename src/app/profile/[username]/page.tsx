@@ -3,6 +3,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Profile | Capto",
+  description: "Manage your profile and update your information."
+}
 
 export default function ProfilePage() {
   return (
