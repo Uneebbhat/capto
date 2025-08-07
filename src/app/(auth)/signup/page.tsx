@@ -1,12 +1,12 @@
-import { Metadata } from 'next'
-import { SignupForm } from '@/components/signup-form'
+import { Metadata } from "next";
+import { SignupForm } from "@/components/signup-form";
 
 export const metadata: Metadata = {
-  title: 'Signup',
-  description: 'Signup to Capto',
-}
+  title: "Signup",
+  description: "Signup to Capto",
+};
 
-export default function SignupPage() {
+export default async function SignupPage() {
   return (
     <>
       <div className="flex min-h-svh w-full items-center justify-center p-4 md:p-10">
@@ -15,5 +15,5 @@ export default function SignupPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -2,14 +2,23 @@ import Link from "next/link";
 
 import { Metadata } from "next";
 import { IconFileAi, IconListDetails } from "@tabler/icons-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "Capto — AI-Powered Caption & Content Prompt Generator for Social Media",
-  description: "Capto helps small business owners and creators generate engaging social media captions and content ideas in seconds. Simplify your content creation with AI-powered tools designed for Instagram, LinkedIn, Facebook, and more.",
+  title:
+    "Capto — AI-Powered Caption & Content Prompt Generator for Social Media",
+  description:
+    "Capto helps small business owners and creators generate engaging social media captions and content ideas in seconds. Simplify your content creation with AI-powered tools designed for Instagram, LinkedIn, Facebook, and more.",
   openGraph: {
     title: "Capto — Instantly Generate Captions & Content Ideas with AI",
-    description: "No more writer's block. Use Capto to create high-quality social media captions and prompts effortlessly.",
+    description:
+      "No more writer's block. Use Capto to create high-quality social media captions and prompts effortlessly.",
     tags: [
       "AI Content Generator",
       "Social Media Automation",
@@ -25,12 +34,13 @@ export const metadata: Metadata = {
       "Social Media Content Planner",
       "Caption Generator for Business",
       "Content Idea Generator",
-      "Social Media Strategy Tools"
-    ]
-  }
-}
+      "Social Media Strategy Tools",
+    ],
+  },
+};
 
-export default function HomePage() {
+export default async function HomePage() {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   return (
     <>
       <section className="w-full py-16 bg-gradient-to-b from-indigo-100 via-white to-white">
@@ -40,8 +50,9 @@ export default function HomePage() {
           </h2>
 
           <p className="max-w-2xl text-gray-600 text-lg">
-            Unlock your full potential with Capto&apos;s smart and easy-to-use AI features.
-            Whether you're generating captions or content prompts — start creating better, faster, and smarter today.
+            Unlock your full potential with Capto&apos;s smart and easy-to-use
+            AI features. Whether you're generating captions or content prompts —
+            start creating better, faster, and smarter today.
           </p>
         </div>
       </section>
@@ -55,9 +66,12 @@ export default function HomePage() {
                 <IconListDetails size={32} />
               </CardHeader>
               <CardContent>
-                <CardTitle className="text-2xl font-bold mb-2">Captions Generator</CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2">
+                  Captions Generator
+                </CardTitle>
                 <CardDescription>
-                  Generate engaging captions for your social media posts in seconds.
+                  Generate engaging captions for your social media posts in
+                  seconds.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -70,7 +84,9 @@ export default function HomePage() {
                 <IconFileAi size={32} />
               </CardHeader>
               <CardContent>
-                <CardTitle className="text-2xl font-bold mb-2">Prompts Generator</CardTitle>
+                <CardTitle className="text-2xl font-bold mb-2">
+                  Prompts Generator
+                </CardTitle>
                 <CardDescription>
                   Create content prompts to inspire your next post or article.
                 </CardDescription>

@@ -11,17 +11,19 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { IconBrandGoogleFilled } from "@tabler/icons-react"
+import useSignup from "@/hooks/api/useSignup"
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const { isPassword, handleTogglePassword } = useTogglePassword()
+  const { loading, formData, handleOnChange, handleOnSubmit } = useSignup()
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -33,7 +35,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleOnSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>
@@ -41,6 +43,8 @@ export function SignupForm({
                   id="username"
                   name="username"
                   type="text"
+                  value={formData.username}
+                  onChange={handleOnChange}
                   placeholder="John Doe"
                   required
                 />
@@ -51,6 +55,8 @@ export function SignupForm({
                   id="email"
                   name="email"
                   type="email"
+                  value={formData.email}
+                  onChange={handleOnChange}
                   placeholder="johndoe@example.com"
                   required
                 />
@@ -60,8 +66,10 @@ export function SignupForm({
                 <div className="relative">
                   <Input
                     id="password"
-                    type={isPassword ? "text" : "password"}
                     name="password"
+                    type={isPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={handleOnChange}
                     placeholder="Password"
                     required
                   />
@@ -73,13 +81,16 @@ export function SignupForm({
                 </div>
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
-                  Signup
+                <Button type="submit" className="w-full" disabled={loading || !formData.username || !formData.email || !formData.password}>
+                  {loading ? <>
+                    <Loader2 className="animate-spin" />
+                    Signup
+                  </> : "Signup"}
                 </Button>
-                <Button variant="outline" className="w-full">
+                {/* <Button variant="outline" className="w-full">
                   <IconBrandGoogleFilled />
                   Signup with Google
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
