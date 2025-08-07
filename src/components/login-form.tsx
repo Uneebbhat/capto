@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import useTogglePassword from "@/hooks/useTogglePassword"
+import Link from "next/link";
+import useLogin from "@/hooks/api/useLogin";
+import useTogglePassword from "@/hooks/useTogglePassword";
 
 import {
   Card,
@@ -9,19 +10,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { Eye, EyeOff } from "lucide-react"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { IconBrandGoogleFilled } from "@tabler/icons-react"
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { isPassword, handleTogglePassword } = useTogglePassword()
+  const { isPassword, handleTogglePassword } = useTogglePassword();
+  const { loading, formData, handleOnChange, handleOnSubmit } = useLogin();
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -33,7 +34,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleOnSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
@@ -43,6 +44,8 @@ export function LoginForm({
                   name="email"
                   placeholder="m@example.com"
                   required
+                  value={formData.email}
+                  onChange={handleOnChange}
                 />
               </div>
               <div className="grid gap-3">
@@ -54,44 +57,48 @@ export function LoginForm({
                     name="password"
                     placeholder="Password"
                     required
+                    value={formData.password}
+                    onChange={handleOnChange}
                   />
                   {isPassword ? (
-                    <EyeOff className="absolute top-1.5 right-2 cursor-pointer" onClick={handleTogglePassword} />
+                    <EyeOff
+                      className="absolute top-1.5 right-2 cursor-pointer"
+                      onClick={handleTogglePassword}
+                    />
                   ) : (
-                    <Eye className="absolute top-1.5 right-2 cursor-pointer" onClick={handleTogglePassword} />
-                  )}                </div>
-              </div>
-              {/* <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
+                    <Eye
+                      className="absolute top-1.5 right-2 cursor-pointer"
+                      onClick={handleTogglePassword}
+                    />
+                  )}{" "}
                 </div>
-                <Input id="password" type="password" required />
-              </div> */}
+              </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
-                  Login
-                </Button>
-                <Button variant="outline" className="w-full">
-                  <IconBrandGoogleFilled />
-                  Login with Google
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={loading || !formData.email || !formData.password}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="animate-spin" />
+                      Login
+                    </>
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
               <Link href="/signup" className="underline underline-offset-4">
-                Sign up
+                Signup
               </Link>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
