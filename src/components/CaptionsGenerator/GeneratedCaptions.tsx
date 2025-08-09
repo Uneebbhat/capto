@@ -1,19 +1,63 @@
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+"use client";
+
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Bookmark, Copy } from "lucide-react";
+import useGetGeneratedCaptions from "@/hooks/api/useGetGeneratedCaptions";
 
 const GeneratedCaptions = () => {
-  return (
-    <>
-      <Card>
-        <CardHeader>
-          <CardTitle>Generated Captions</CardTitle>
-          <CardDescription>Copy and use these captions for your social media posts</CardDescription>
-        </CardHeader>
-        <div className="flex flex-col items-center justify-center h-[300px] text-center">
-          <p className="text-muted-foreground">Your generated captions will appear here</p>
-        </div>
-      </Card>
-    </>
-  )
-}
+  const { captions } = useGetGeneratedCaptions();
 
-export default GeneratedCaptions
+  const handleCopyCaption = (captionText: string) => {
+    navigator.clipboard.writeText(captionText);
+    toast.success("Caption copied!");
+  };
+
+  return (
+    <div className="space-y-4">
+      {captions.map((caption) =>
+        caption.captionData.map((captionText, index) => (
+          <Card key={`${caption._id}-${index}`} className="overflow-hidden">
+            <CardHeader className="flex items-center justify-between pb-2">
+              <div>
+                <CardTitle className="text-sm font-medium flex items-center gap-2">
+                  {index + 1}. {caption.postIdea}
+                </CardTitle>
+                <CardDescription className="text-xs text-muted-foreground">
+                  {caption.platform} • {caption.tone}
+                </CardDescription>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleCopyCaption(captionText)}
+                >
+                  <Copy className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                >
+                  <Bookmark className="w-4 h-4" />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p>{captionText}</p>
+            </CardContent>
+          </Card>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default GeneratedCaptions;
