@@ -1,66 +1,63 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { toast } from 'sonner'
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { Bookmark, Copy } from "lucide-react";
+import useGetGeneratedPrompts from "@/hooks/api/useGetGeneratedPrompts";
 
 const GeneratedPrompts = () => {
-  const [prompts, setPrompts] = useState<string[]>([])
+  const { prompts } = useGetGeneratedPrompts();
 
-  useEffect(() => {
-    // Listen for the custom event from the form component
-    const handlePromptsGenerated = (event: CustomEvent) => {
-      setPrompts(event.detail.prompts)
-    }
-
-    window.addEventListener('promptsGenerated', handlePromptsGenerated as EventListener)
-
-    return () => {
-      window.removeEventListener('promptsGenerated', handlePromptsGenerated as EventListener)
-    }
-  }, [])
-
-  const handleCopyPrompt = (prompt: string) => {
-    navigator.clipboard.writeText(prompt)
-    toast.success('Prompt copied to clipboard!', {
-      description: 'You can now paste it anywhere you need.',
-      duration: 3000
-    })
-  }
+  const handleCopyCaption = (promptText: string) => {
+    navigator.clipboard.writeText(promptText);
+    toast.success("Caption copied!");
+  };
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Generated Prompts</CardTitle>
-        <CardDescription>Copy and use these prompts for your content creation</CardDescription>
-      </CardHeader>
-      
-      <div className="px-6 pb-6 flex flex-col gap-4">
-        {prompts.length > 0 ? (
-          <div className="flex flex-col gap-4">
-            {prompts.map((prompt, index) => (
-              <div key={index} className="p-4 border rounded-lg bg-muted/30">
-                <p>{prompt}</p>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="mt-2"
-                  onClick={() => handleCopyPrompt(prompt)}
-                >
-                  Copy
-                </Button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center h-[300px] text-center">
-            <p className="text-muted-foreground">Your generated prompts will appear here</p>
-          </div>
-        )}
-      </div>
-    </Card>
-  )
-}
+    <div className="space-y-4">
+      {prompts && prompts.length > 0 ? (
+        prompts.map((prompt) =>
+          prompt.promptsData && prompt.promptsData.map((promptText, index) => (
+            <Card key={`${prompt._id}-${index}`} className="overflow-hidden">
+              <CardHeader className="flex items-center justify-between pb-2">
+                <div>
+                  <CardTitle className="text-sm font-medium flex items-center gap-2">
+                    {index + 1}. {prompt.promptIdea}
+                  </CardTitle>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleCopyCaption(promptText)}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Bookmark className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p>{promptText}</p>
+              </CardContent>
+            </Card>
+          ))
+        )
+      ) : (
+        <div className="text-center py-8 text-muted-foreground">
+          No prompts generated yet. Use the form to create some prompts.
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default GeneratedPrompts
+export default GeneratedPrompts;
